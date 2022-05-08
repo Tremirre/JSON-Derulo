@@ -6,7 +6,7 @@ import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-class JsonTransformerTest {
+class JsonReaderTest {
 
     String simpleJson = "{ \"id\": \"0001\",\n" +
                         "\t\"type\": \"donut\",\n" +
@@ -14,7 +14,7 @@ class JsonTransformerTest {
                         "\t\"ppu\": 0.55, }";
     @Test
     void getJsonNode() throws JsonProcessingException {
-        JsonTransformer transformer = new JsonTransformer(simpleJson);
+        JsonReader transformer = new JsonReader(simpleJson);
         JsonNode node = transformer.getJsonNode();
         assertEquals(node.get("type").asText(), "donut");
     }

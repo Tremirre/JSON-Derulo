@@ -2,23 +2,28 @@ package pl.put.poznan.json_tool.logic;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonNode;
-import com.fasterxml.jackson.databind.ObjectMapper;
 
 public class JsonTransformer {
-    private static ObjectMapper objectMapper = getObjectMapper();
-    private String source;
+    private JsonNode node;
 
-    public JsonTransformer(String s){
-        this.source = s;
+    public JsonTransformer(String stringJson) throws JsonProcessingException {
+        JsonReader transformer = new JsonReader(stringJson);
+        this.node = transformer.getJsonNode();
     }
 
-    private static ObjectMapper getObjectMapper(){
-        ObjectMapper defaultObjectMapper = new ObjectMapper();
-        return defaultObjectMapper;
+    public String minifyJson(){
+        return "";
     }
 
-    public JsonNode getJsonNode() throws JsonProcessingException {
-        return objectMapper.readTree(this.source);
+    public String unminifyJson(){
+        return "";
     }
 
+    public String removeKeys(String[] keys){
+        return "";
+    }
+
+    public String retainKeys(String[] keys){
+        return "";
+    }
 }
