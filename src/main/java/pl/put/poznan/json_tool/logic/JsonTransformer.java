@@ -6,14 +6,19 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 
 public class JsonTransformer {
     private static ObjectMapper objectMapper = getObjectMapper();
+    private String source;
+
+    public JsonTransformer(String s){
+        this.source = s;
+    }
 
     private static ObjectMapper getObjectMapper(){
         ObjectMapper defaultObjectMapper = new ObjectMapper();
         return defaultObjectMapper;
     }
 
-    public static JsonNode getJsonNode(String s) throws JsonProcessingException {
-        return objectMapper.readTree(s);
+    public JsonNode getJsonNode() throws JsonProcessingException {
+        return objectMapper.readTree(this.source);
     }
 
 }

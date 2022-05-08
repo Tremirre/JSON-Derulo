@@ -14,7 +14,8 @@ class JsonTransformerTest {
                         "\t\"ppu\": 0.55, }";
     @Test
     void getJsonNode() throws JsonProcessingException {
-        JsonNode node = JsonTransformer.getJsonNode(simpleJson);
+        JsonTransformer transformer = new JsonTransformer(simpleJson);
+        JsonNode node = transformer.getJsonNode();
         assertEquals(node.get("type").asText(), "donut");
     }
 }
