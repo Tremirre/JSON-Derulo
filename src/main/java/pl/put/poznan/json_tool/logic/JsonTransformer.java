@@ -26,12 +26,10 @@ public class JsonTransformer {
     }
 
     public String removeKeys(String[] keys) {
-        objectNode.remove(Arrays.asList(keys));
-        return objectNode.toPrettyString();
+        return objectNode.remove(Arrays.asList(keys)).toPrettyString();
     }
 
     public String retainKeys(String[] keys){
-        objectNode.retain(Arrays.asList(keys));
-        return objectNode.toPrettyString();
+        return objectNode.retain(Arrays.asList(keys)).toPrettyString();
     }
 }
