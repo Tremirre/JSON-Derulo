@@ -12,16 +12,11 @@ public class JsonTransformer {
     private ObjectMapper mapper;
     private ObjectNode objectNode;
 
-<<<<<<< HEAD
-    public JsonTransformer() throws JsonProcessingException {
+    public JsonTransformer() {
         this.mapper = new ObjectMapper();
     }
 
     public void setNode(String source) throws JsonProcessingException {
-=======
-    public JsonTransformer(String source) throws JsonProcessingException {
-        this.mapper = new ObjectMapper();
->>>>>>> f63ecef3410b8d18c924ff736f3332b06a54565f
         this.objectNode = (ObjectNode)mapper.readTree(source);
     }
 
