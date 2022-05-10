@@ -15,16 +15,20 @@ class JsonTransformerTest {
 
     @Test
     void minify() throws JsonProcessingException {
-        JsonTransformer transformer = new JsonTransformer(simpleJson);
+        JsonTransformer transformer = new JsonTransformer();
+        transformer.setNode(simpleJson);
         System.out.println("MINIFIED:");
         System.out.println(transformer.minify());
+//        assert blabla
     }
 
     @Test
     void unminify() throws JsonProcessingException {
-        JsonTransformer transformer = new JsonTransformer(simpleJson);
+        JsonTransformer transformer = new JsonTransformer();
+        transformer.setNode(simpleJson);
         System.out.println("\nUNMINIFIED:");
         System.out.println(transformer.unminify());
+//        assert blabla
 
     }
 }
