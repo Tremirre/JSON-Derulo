@@ -28,7 +28,23 @@ class JsonTransformerTest {
         transformer.setNode(simpleJson);
         System.out.println("\nUNMINIFIED:");
         System.out.println(transformer.unminify());
+<<<<<<< HEAD
 //        assert blabla
+=======
+    }
+>>>>>>> f63ecef3410b8d18c924ff736f3332b06a54565f
 
+    @Test
+    void removeKeys() throws JsonProcessingException {
+        JsonTransformer transformer = new JsonTransformer(simpleJson);
+        System.out.println("\nWithout keys:");
+        System.out.println(transformer.removeKeys(new String[]{"type", "ppu"}));
+    }
+
+    @Test
+    void retainKeys() throws JsonProcessingException {
+        JsonTransformer transformer = new JsonTransformer(simpleJson);
+        System.out.println("\nWith keys:");
+        System.out.println(transformer.retainKeys(new String[]{"type", "ppu"}));
     }
 }
