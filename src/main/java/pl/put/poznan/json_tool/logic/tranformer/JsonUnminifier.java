@@ -1,4 +1,4 @@
-package pl.put.poznan.json_tool.logic;
+package pl.put.poznan.json_tool.logic.tranformer;
 
 import pl.put.poznan.json_tool.logic.tranformer.BaseJsonTransformer;
 
