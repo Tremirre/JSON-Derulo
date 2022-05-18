@@ -1,6 +1,7 @@
-package pl.put.poznan.json_tool.logic;
+package pl.put.poznan.json_tool.logic.tranformer;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
+import pl.put.poznan.json_tool.logic.JsonTransformer;
 
 import java.util.LinkedList;
 import java.util.Queue;

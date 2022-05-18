@@ -2,10 +2,7 @@ package pl.put.poznan.json_tool.logic;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import org.junit.jupiter.api.Test;
-
-import java.util.LinkedList;
-
-import static org.junit.jupiter.api.Assertions.*;
+import pl.put.poznan.json_tool.logic.tranformer.JsonsComparator;
 
 class JsonsComparatorTest {
 

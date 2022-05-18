@@ -1,4 +1,4 @@
-package pl.put.poznan.json_tool.logic;
+package pl.put.poznan.json_tool.logic.tranformer;
 
 public class JsonKeyRemover extends BaseJsonTransformer{
     public JsonKeyRemover(BaseJsonTransformer nextTransform) {
