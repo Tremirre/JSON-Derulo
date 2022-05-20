@@ -5,7 +5,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import java.io.IOException;
 
 public class JsonUtils {
-    JsonUtils(){}
+    public JsonUtils(){}
 
     public static boolean isValidJson(String jsonString ) {
         try {
