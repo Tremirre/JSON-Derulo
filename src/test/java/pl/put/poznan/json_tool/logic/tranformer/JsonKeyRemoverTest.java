@@ -23,16 +23,14 @@ class JsonKeyRemoverTest {
     }
 
     @Test
-    void testTransform() throws JsonProcessingException {
+    void testTransform() {
         String res = jsonKeyRemover.transform();
-//        System.out.println(res);
         assertTrue(ju.isValidJson(res));
     }
     @Test
     void testTransformWithPrevious() throws JsonProcessingException{
         this.jsonKeyRemover = new JsonKeyRemover(new JsonMinifier(new JsonUnminifier(simpleJson)), keys);
         String res = jsonKeyRemover.transform();
-//        System.out.println(res);
         assertTrue(ju.isValidJson(res));
     }
 

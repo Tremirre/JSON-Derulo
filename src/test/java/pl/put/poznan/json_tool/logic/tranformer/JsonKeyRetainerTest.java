@@ -23,16 +23,14 @@ class JsonKeyRetainerTest {
     }
 
     @Test
-    void testTransform() throws JsonProcessingException {
+    void testTransform() {
         String res = jsonKeyRetainer.transform();
-//        System.out.println(res);
         assertTrue(ju.isValidJson(res));
     }
     @Test
     void testTransformWithPrevious() throws JsonProcessingException{
         this.jsonKeyRetainer = new JsonKeyRetainer(new JsonMinifier(simpleJson), keys);
         String res = jsonKeyRetainer.transform();
-//        System.out.println(res);
         assertTrue(ju.isValidJson(res));
     }
 

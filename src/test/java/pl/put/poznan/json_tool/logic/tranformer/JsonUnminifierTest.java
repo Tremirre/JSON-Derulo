@@ -8,7 +8,7 @@ import pl.put.poznan.json_tool.logic.JsonUtils;
 import static org.junit.jupiter.api.Assertions.*;
 
 class JsonUnminifierTest {
-    private JsonUnminifier jsonUnminifier;;
+    private JsonUnminifier jsonUnminifier;
     private JsonUtils ju;
     private String[] keys = new String[]{"type", "ppu"};
     private String simpleJson = "{ \"id\": \"0001\",\n" +
@@ -25,16 +25,12 @@ class JsonUnminifierTest {
     @Test
     void testTransform() throws JsonProcessingException {
         String res = jsonUnminifier.transform();
-//        System.out.println("UNMINIFIED:");
-//        System.out.println(res);
         assertTrue(ju.isValidJson(res));
     }
     @Test
     void testTransformWithPrevious() throws JsonProcessingException{
         this.jsonUnminifier = new JsonUnminifier(new JsonKeyRetainer(simpleJson, keys));
         String res = jsonUnminifier.transform();
-//        System.out.println("UNMINIFIED:");
-//        System.out.println(res);
         assertTrue(ju.isValidJson(res));
     }
 }
