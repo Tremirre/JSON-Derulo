@@ -16,7 +16,7 @@ public class JsonKeyRemover extends BaseJsonTransformer{
         super(nextTransform);
         this.keys = keys;
     }
-    public JsonKeyRemover(String jsonString, String[] keys) {
+    public JsonKeyRemover(String jsonString, String[] keys) throws JsonProcessingException {
         super(jsonString);
         this.keys= keys;
     }
@@ -24,15 +24,14 @@ public class JsonKeyRemover extends BaseJsonTransformer{
     /**
      * Remove by selected keys
      * @return json without specified keys
-     * @throws JsonProcessingException
      */
     @Override
-    public String transform() throws JsonProcessingException {
-        if(this.previousTransformer != null) {
-            this.jsonString = this.previousTransformer.transform();
-        }
-        ObjectMapper mapper = new ObjectMapper();
-        ObjectNode objectNode = (ObjectNode)mapper.readTree(this.jsonString);
-        return objectNode.remove(Arrays.asList(keys)).toPrettyString();
+    public ObjectNode rawTransform() {
+        return super.rawTransform().remove(Arrays.asList(keys));
+    }
+
+    @Override
+    public String transform() {
+        return rawTransform().toPrettyString();
     }
 }

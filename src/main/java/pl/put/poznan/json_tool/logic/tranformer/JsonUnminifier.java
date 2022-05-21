@@ -11,22 +11,17 @@ public class JsonUnminifier extends BaseJsonTransformer {
     public JsonUnminifier(BaseJsonTransformer nextTransform) {
         super(nextTransform);
     }
-    public JsonUnminifier(String jsonString) {
+    public JsonUnminifier(String jsonString) throws JsonProcessingException {
         super(jsonString);
     }
 
     /**
-     * Unminify json
-     * @return full json
-     * @throws JsonProcessingException
+     * Unminifies json
+     * @return full, unfinified json as a String
+     * @throws JsonProcessingException thrown on object node to string conversion
      */
     @Override
     public String transform() throws JsonProcessingException {
-        if(this.previousTransformer != null) {
-            this.jsonString = this.previousTransformer.transform();
-        }
-        ObjectMapper mapper = new ObjectMapper();
-        ObjectNode objectNode = (ObjectNode)mapper.readTree(this.jsonString);
-        return mapper.writerWithDefaultPrettyPrinter().writeValueAsString(objectNode);
+        return this.jsonObjectMapper.writerWithDefaultPrettyPrinter().writeValueAsString(super.rawTransform());
     }
 }

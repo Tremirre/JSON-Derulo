@@ -16,23 +16,22 @@ public class JsonKeyRetainer extends BaseJsonTransformer{
         super(nextTransform);
         this.keys = keys;
     }
-    public JsonKeyRetainer(String jsonString, String[] keys) {
+    public JsonKeyRetainer(String jsonString, String[] keys) throws JsonProcessingException {
         super(jsonString);
         this.keys= keys;
+    }
+
+    @Override
+    protected ObjectNode rawTransform() {
+        return super.rawTransform().retain(Arrays.asList(keys));
     }
 
     /**
      * Retain only specified keys
      * @return json with selected keys
-     * @throws JsonProcessingException
      */
     @Override
-    public String transform() throws JsonProcessingException {
-        if(this.previousTransformer != null) {
-            this.jsonString = this.previousTransformer.transform();
-        }
-        ObjectMapper mapper = new ObjectMapper();
-        ObjectNode objectNode = (ObjectNode)mapper.readTree(this.jsonString);
-        return objectNode.retain(Arrays.asList(keys)).toPrettyString();
+    public String transform() {
+        return rawTransform().toPrettyString();
     }
 }
