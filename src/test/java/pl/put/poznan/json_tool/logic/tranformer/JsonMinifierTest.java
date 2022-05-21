@@ -3,13 +3,12 @@ package pl.put.poznan.json_tool.logic.tranformer;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import pl.put.poznan.json_tool.logic.JsonTransformer;
 import pl.put.poznan.json_tool.logic.JsonUtils;
 
 import static org.junit.jupiter.api.Assertions.*;
 
 class JsonMinifierTest {
-    private JsonMinifier jsonMinifier;;
+    private JsonMinifier jsonMinifier;
     private JsonUtils ju;
     private String[] keys = new String[]{"type", "ppu"};
     private String simpleJson = "{ \"id\": \"0001\",\n" +
@@ -26,8 +25,6 @@ class JsonMinifierTest {
     @Test
     void testTransform() throws JsonProcessingException {
         String res = jsonMinifier.transform();
-//        System.out.println("MINIFIED:");
-//        System.out.println(res);
         assertTrue(ju.isValidJson(res) && !res.contains("\n") && !res.contains(" "));
     }
 
@@ -35,8 +32,6 @@ class JsonMinifierTest {
     void testTransformWithPrevious() throws JsonProcessingException{
         this.jsonMinifier = new JsonMinifier(new JsonKeyRetainer(simpleJson, keys));
         String res = jsonMinifier.transform();
-//        System.out.println("MINIFIED:");
-//        System.out.println(res);
         assertTrue(ju.isValidJson(res) && !res.contains("\n") && !res.contains(" "));
     }
 
