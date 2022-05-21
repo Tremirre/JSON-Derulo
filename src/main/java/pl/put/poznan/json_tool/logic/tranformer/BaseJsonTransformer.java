@@ -21,13 +21,17 @@ public abstract class BaseJsonTransformer {
         this.jsonObjectNode = (ObjectNode)this.jsonObjectMapper.readTree(jsonString);
     }
 
+    /**
+     * Performs transformation and returns a json in ObjectNode form
+     * @return transformed json in ObjectNode form
+     */
     protected ObjectNode rawTransform() {
         return this.previousTransformer != null ? this.previousTransformer.rawTransform() : this.jsonObjectNode;
     }
 
     /**
-     * perform transformation
-     * @return transformed json
+     * Performs transformation and returns a json in String form
+     * @return transformed json in String form
      */
     public abstract String transform() throws JsonProcessingException;
 }

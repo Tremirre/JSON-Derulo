@@ -20,14 +20,18 @@ public class JsonKeyRetainer extends BaseJsonTransformer{
         this.keys= keys;
     }
 
+    /**
+     * Retains keys provided in the constructor
+     * @return json object node with provided keys only
+     */
     @Override
     protected ObjectNode rawTransform() {
         return super.rawTransform().retain(Arrays.asList(keys));
     }
 
     /**
-     * Retain only specified keys
-     * @return json with selected keys
+     * Retains keys provided in the constructor
+     * @return json string with provided keys only
      */
     @Override
     public String transform() {
