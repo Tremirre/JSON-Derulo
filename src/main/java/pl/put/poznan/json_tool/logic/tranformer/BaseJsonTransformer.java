@@ -5,7 +5,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 
 /**
- * Abstract class for parsing jsons
+ * An abstract class for transforming json in multiple ways.
  */
 public abstract class BaseJsonTransformer {
     protected BaseJsonTransformer previousTransformer;
@@ -22,7 +22,7 @@ public abstract class BaseJsonTransformer {
     }
 
     /**
-     * Performs transformation and returns a json in ObjectNode form
+     * Performs transformation and returns a json in ObjectNode form.
      * @return transformed json in ObjectNode form
      */
     protected ObjectNode rawTransform() {
@@ -30,7 +30,7 @@ public abstract class BaseJsonTransformer {
     }
 
     /**
-     * Performs transformation and returns a json in String form
+     * Performs transformation and returns a json in String form.
      * @return transformed json in String form
      */
     public abstract String transform() throws JsonProcessingException;

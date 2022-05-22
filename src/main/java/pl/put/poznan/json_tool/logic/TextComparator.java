@@ -13,11 +13,20 @@ public class TextComparator {
     private String s1;
     private String s2;
 
+    /**
+     * Creates an instance of a comparator.
+     * @param s1 string1 to be compared
+     * @param s2 string2 to be compared
+     */
     public TextComparator(String s1, String s2){
         this.s1 = s1;
         this.s2 = s2;
     }
 
+    /**
+     * Compares two texts.
+     * @return list of numbers of lines where there is a difference between texts.
+     */
     public List<Integer> differentLines(){
 
         List<Integer> linesDiff = new LinkedList<>();

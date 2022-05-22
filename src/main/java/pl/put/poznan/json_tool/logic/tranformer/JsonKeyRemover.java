@@ -21,7 +21,7 @@ public class JsonKeyRemover extends BaseJsonTransformer{
     }
 
     /**
-     * Removes keys provided in the constructor
+     * Removes keys provided in the constructor.
      * @return json object node without provided keys
      */
     @Override
@@ -30,7 +30,7 @@ public class JsonKeyRemover extends BaseJsonTransformer{
     }
 
     /**
-     * Removes keys provided in the constructor
+     * Removes keys provided in the constructor.
      * @return json string without provided keys
      */
     @Override

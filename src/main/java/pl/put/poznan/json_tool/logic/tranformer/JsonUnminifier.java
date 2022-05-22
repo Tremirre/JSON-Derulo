@@ -4,7 +4,7 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 
 /**
- *  Get the full structure in JSON format from minified JSON format to improve the readability of the data
+ *  Get the full structure in JSON format from minified JSON format to improve the readability of the data.
  */
 public class JsonUnminifier extends BaseJsonTransformer {
     public JsonUnminifier(BaseJsonTransformer nextTransform) {
@@ -15,7 +15,7 @@ public class JsonUnminifier extends BaseJsonTransformer {
     }
 
     /**
-     * Unminifies json
+     * Unminifies json.
      * @return full, unfinified json as a String
      * @throws JsonProcessingException thrown on object node to string conversion
      */

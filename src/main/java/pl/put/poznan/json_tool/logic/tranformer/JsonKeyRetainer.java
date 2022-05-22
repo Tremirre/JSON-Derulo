@@ -6,7 +6,7 @@ import com.fasterxml.jackson.databind.node.ObjectNode;
 import java.util.Arrays;
 
 /**
- * Get a JSON-formatted structure with only certain keys to simplify the structure
+ * Get a JSON-formatted structure with only certain keys to simplify the structure.
  */
 public class JsonKeyRetainer extends BaseJsonTransformer{
     protected String[] keys;
@@ -21,7 +21,7 @@ public class JsonKeyRetainer extends BaseJsonTransformer{
     }
 
     /**
-     * Retains keys provided in the constructor
+     * Retains keys provided in the constructor.
      * @return json object node with provided keys only
      */
     @Override
@@ -30,7 +30,7 @@ public class JsonKeyRetainer extends BaseJsonTransformer{
     }
 
     /**
-     * Retains keys provided in the constructor
+     * Retains keys provided in the constructor.
      * @return json string with provided keys only
      */
     @Override
