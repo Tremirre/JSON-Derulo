@@ -15,8 +15,8 @@ public class JsonKeyRetainer extends BaseJsonTransformer{
         super(nextTransform);
         this.keys = keys;
     }
-    public JsonKeyRetainer(String jsonString, String[] keys) throws JsonProcessingException {
-        super(jsonString);
+    public JsonKeyRetainer(ObjectNode json, String[] keys){
+        super(json);
         this.keys= keys;
     }
 
