@@ -15,8 +15,8 @@ public class JsonKeyRemover extends BaseJsonTransformer{
         super(nextTransform);
         this.keys = keys;
     }
-    public JsonKeyRemover(String jsonString, String[] keys) throws JsonProcessingException {
-        super(jsonString);
+    public JsonKeyRemover(ObjectNode json, String[] keys){
+        super(json);
         this.keys= keys;
     }
 

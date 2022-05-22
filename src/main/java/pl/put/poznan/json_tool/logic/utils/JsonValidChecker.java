@@ -1,11 +1,11 @@
-package pl.put.poznan.json_tool.logic;
+package pl.put.poznan.json_tool.logic.utils;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import java.io.IOException;
 
-public class JsonUtils {
-    public JsonUtils(){}
+public class JsonValidChecker {
+    public JsonValidChecker(){}
 
     public static boolean isValidJson(String jsonString ) {
         try {

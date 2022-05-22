@@ -1,8 +1,13 @@
 package pl.put.poznan.json_tool.logic;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.node.ObjectNode;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import pl.put.poznan.json_tool.logic.tranformer.JsonKeyRetainer;
 import pl.put.poznan.json_tool.logic.tranformer.JsonUnminifier;
+import pl.put.poznan.json_tool.logic.utils.JsonValidChecker;
 
 import java.util.Arrays;
 
@@ -24,8 +29,12 @@ class TextComparatorTest {
 
     @Test
     void differentLines() throws JsonProcessingException {
-        TextComparator comparator = new TextComparator((new JsonUnminifier(simpleJson)).transform(),
-                (new JsonUnminifier(simpleJson2)).transform());
+        ObjectMapper mapper = new ObjectMapper();
+        ObjectNode json1  = (ObjectNode)mapper.readTree(simpleJson);
+        ObjectNode json2  = (ObjectNode)mapper.readTree(simpleJson2);
+
+        TextComparator comparator = new TextComparator((new JsonUnminifier(json1)).transform(),
+                (new JsonUnminifier(json2)).transform());
         assertEquals(comparator.differentLines(), Arrays.asList(5, 6, 7, 8));
     }
 }

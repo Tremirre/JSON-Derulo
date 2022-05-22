@@ -16,9 +16,9 @@ public abstract class BaseJsonTransformer {
         this.jsonObjectMapper = new ObjectMapper();
         this.previousTransformer = previousTransformer;
     }
-    public BaseJsonTransformer(String jsonString) throws JsonProcessingException {
+    public BaseJsonTransformer(ObjectNode json){
         this.jsonObjectMapper = new ObjectMapper();
-        this.jsonObjectNode = (ObjectNode)this.jsonObjectMapper.readTree(jsonString);
+        this.jsonObjectNode = json;
     }
 
     /**
