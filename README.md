@@ -1,4 +1,6 @@
 ![example workflow](https://github.com/Tremirre/JSON-Derulo/actions/workflows/ci.yml/badge.svg)
+![version](https://img.shields.io/github/v/release/Tremirre/JSON-Derulo?display_name=tag&include_prereleases)
+
 # JSON-Derulo
 2022-SE Happy group project
 
