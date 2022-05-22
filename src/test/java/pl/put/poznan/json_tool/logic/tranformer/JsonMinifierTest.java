@@ -5,40 +5,33 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import pl.put.poznan.json_tool.logic.utils.JsonValidChecker;
 
 import static org.junit.jupiter.api.Assertions.*;
 
 class JsonMinifierTest {
-    private ObjectNode json;
-    private JsonMinifier jsonMinifier;
-    private JsonValidChecker ju;
-    private String[] keys = new String[]{"type", "ppu"};
-    private String simpleJson = "{ \"id\": \"0001\",\n" +
+    private ObjectMapper objectMapper = new ObjectMapper();
+    final private String simpleJson = "{ \"id\": \"0001\",\n" +
             "\t\"type\": \"donut\",\n" +
             "\t\"name\": \"Cake\",\n" +
             "\t\"ppu\": 0.55 }";
+    final private String expectedJson = "{\"id\":\"0001\",\"type\":\"donut\",\"name\":\"Cake\",\"ppu\":0.55}";
+    private ObjectNode jsonNode;
+
 
     @BeforeEach
     void setUp() throws JsonProcessingException {
-        ObjectMapper mapper = new ObjectMapper();
-        this.json  = (ObjectNode)mapper.readTree(simpleJson);
-
-        this.jsonMinifier = new JsonMinifier(json);
-        this.ju = new JsonValidChecker();
+        this.jsonNode = (ObjectNode)objectMapper.readTree(simpleJson);
     }
 
     @Test
     void testTransform() throws JsonProcessingException {
-        String res = jsonMinifier.transform();
-        assertTrue(ju.isValidJson(res) && !res.contains("\n") && !res.contains(" "));
+        String res = new JsonMinifier(jsonNode).transform();
+        assertEquals(expectedJson, res);
     }
 
     @Test
     void testTransformWithPrevious() throws JsonProcessingException{
-        this.jsonMinifier = new JsonMinifier(new JsonKeyRetainer(json, keys));
-        String res = jsonMinifier.transform();
-        assertTrue(ju.isValidJson(res) && !res.contains("\n") && !res.contains(" "));
+        String res = new JsonMinifier(new JsonKeyRemover(this.jsonNode, new String[]{"-"})).transform();
+        assertEquals(expectedJson, res);
     }
-
 }

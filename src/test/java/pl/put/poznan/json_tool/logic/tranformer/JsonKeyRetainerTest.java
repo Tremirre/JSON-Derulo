@@ -5,37 +5,45 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import pl.put.poznan.json_tool.logic.utils.JsonValidChecker;
 
 import static org.junit.jupiter.api.Assertions.*;
 
 class JsonKeyRetainerTest {
     private ObjectNode json;
     private JsonKeyRetainer jsonKeyRetainer;
-    private JsonValidChecker ju;
-    private String[] keys = new String[]{"type", "ppu"};
-    private String simpleJson = "{ \"id\": \"0001\",\n" +
+    private ObjectMapper objectMapper;
+    final private String[] keys = new String[]{"id", "name"};
+    final private String simpleJson = "{ \"id\": \"0001\",\n" +
             "\t\"type\": \"donut\",\n" +
             "\t\"name\": \"Cake\",\n" +
             "\t\"ppu\": 0.55 }";
+    final private String expectedJson = "{\"id\": \"0001\", \n\t\"name\": \"Cake\" }";
+    private ObjectNode expectedNode;
 
     @BeforeEach
     void setUp() throws JsonProcessingException {
-        ObjectMapper mapper = new ObjectMapper();
-        this.json  = (ObjectNode)mapper.readTree(simpleJson);
+        this.objectMapper = new ObjectMapper();
+        this.expectedNode = (ObjectNode)this.objectMapper.readTree(expectedJson);
+        this.json = (ObjectNode)this.objectMapper.readTree(simpleJson);
         this.jsonKeyRetainer = new JsonKeyRetainer(json, keys);
     }
 
     @Test
-    void testTransform() {
+    void testTransform() throws JsonProcessingException {
         String res = jsonKeyRetainer.transform();
-        assertTrue(ju.isValidJson(res));
-    }
-    @Test
-    void testTransformWithPrevious() throws JsonProcessingException{
-        this.jsonKeyRetainer = new JsonKeyRetainer(new JsonMinifier(json), keys);
-        String res = jsonKeyRetainer.transform();
-        assertTrue(ju.isValidJson(res));
+        assertEquals(expectedNode, objectMapper.readTree(res));
     }
 
+    @Test
+    void testRawTransform() {
+        ObjectNode res = jsonKeyRetainer.rawTransform();
+        assertEquals(expectedNode, res);
+    }
+
+    @Test
+    void testTransformWithPrevious() throws JsonProcessingException {
+        this.jsonKeyRetainer = new JsonKeyRetainer(new JsonMinifier(new JsonUnminifier(json)), keys);
+        String res = jsonKeyRetainer.transform();
+        assertEquals(expectedNode, objectMapper.readTree(res));
+    }
 }
