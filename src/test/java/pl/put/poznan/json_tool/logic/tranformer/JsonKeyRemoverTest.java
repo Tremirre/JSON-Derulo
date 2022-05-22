@@ -11,30 +11,39 @@ import static org.junit.jupiter.api.Assertions.*;
 class JsonKeyRemoverTest {
     private ObjectNode json;
     private JsonKeyRemover jsonKeyRemover;
-
-    private String[] keys = new String[]{"type", "ppu"};
-    private String simpleJson = "{ \"id\": \"0001\",\n" +
+    private ObjectMapper objectMapper;
+    final private String[] keys = new String[]{"type", "ppu"};
+    final private String simpleJson = "{ \"id\": \"0001\",\n" +
             "\t\"type\": \"donut\",\n" +
             "\t\"name\": \"Cake\",\n" +
             "\t\"ppu\": 0.55 }";
+    final private String expectedJson = "{\"id\": \"0001\", \n\t\"name\": \"Cake\" }";
+    private ObjectNode expectedNode;
 
     @BeforeEach
     void setUp() throws JsonProcessingException {
-        ObjectMapper mapper = new ObjectMapper();
-        this.json = (ObjectNode)mapper.readTree(simpleJson);
+        this.objectMapper = new ObjectMapper();
+        this.expectedNode = (ObjectNode)this.objectMapper.readTree(expectedJson);
+        this.json = (ObjectNode)this.objectMapper.readTree(simpleJson);
         this.jsonKeyRemover = new JsonKeyRemover(json, keys);
     }
 
     @Test
-    void testTransform() {
+    void testTransform() throws JsonProcessingException {
         String res = jsonKeyRemover.transform();
-//      TODO assertions!
+        assertEquals(expectedNode, objectMapper.readTree(res));
     }
 
     @Test
-    void testTransformWithPrevious(){
-        this.jsonKeyRemover = new JsonKeyRemover(new JsonMinifier(new JsonUnminifier(json)), keys);
-        String res = jsonKeyRemover.transform();
+    void testRawTransform() {
+        ObjectNode res = jsonKeyRemover.rawTransform();
+        assertEquals(expectedNode, res);
     }
 
+    @Test
+    void testTransformWithPrevious() throws JsonProcessingException {
+        this.jsonKeyRemover = new JsonKeyRemover(new JsonMinifier(new JsonUnminifier(json)), keys);
+        String res = jsonKeyRemover.transform();
+        assertEquals(expectedNode, objectMapper.readTree(res));
+    }
 }

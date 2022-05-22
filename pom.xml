@@ -14,11 +14,12 @@
     <groupId>pl.put.poznan</groupId>
     <artifactId>JSON-Derulo</artifactId>
     <version>1.0.0</version>
+    <packaging>jar</packaging>
+
 
     <properties>
         <java.version>11</java.version>
     </properties>
-
 
     <dependencies>
         <dependency>
@@ -58,6 +59,22 @@
             <plugin>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>repackage</goal>
+                        </goals>
+                        <configuration>
+                            <classifier>spring-boot</classifier>
+                            <mainClass>
+                                pl.put.poznan.json_tool.app.JSONToolApplication
+                            </mainClass>
+                            <outputDirectory>
+                                ${project.basedir}/dist
+                            </outputDirectory>
+                        </configuration>
+                    </execution>
+                </executions>
             </plugin>
         </plugins>
     </build>
