@@ -4,37 +4,34 @@ import com.fasterxml.jackson.databind.node.ObjectNode;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.web.bind.annotation.*;
+import pl.put.poznan.json_tool.logic.TextComparator;
 import pl.put.poznan.json_tool.logic.tranformer.BaseJsonTransformer;
+import pl.put.poznan.json_tool.logic.tranformer.JsonUnminifier;
 import pl.put.poznan.json_tool.logic.utils.JsonTransormationsWrapper;
 
-import java.util.Arrays;
+import java.util.List;
 
+/**
+ * Handle http requests for json transformations and the comparison of two json files.
+ */
 @RestController
 @RequestMapping("/json")
 public class JSONToolController {
 
     private static final Logger logger = LoggerFactory.getLogger(JSONToolController.class);
 
-//    TODO - do wyrzucenia
-    @RequestMapping(method = RequestMethod.GET, produces = "application/json")
-    public String get(@PathVariable String text,
-                              @RequestParam(value="transforms", defaultValue="upper,escape") String[] transforms) {
-
-        // log the parameters
-        logger.debug(text);
-        logger.debug(Arrays.toString(transforms));
-
-        // perform the transformation, you should run your logic here, below is just a silly example
-//        JSONTool transformer = new JSONTool(transforms);
-//        return transformer.transform(text);
-        return "";
-    }
-
+    /**
+     * Retrieves a json from a http POST request and processes it according to user-defined parameters.
+     * @param json json file to be transformed
+     * @param actions actions to be performed (in a string form, comma-separated)
+     * @param keys keys to be removed or retained (in a string form, comma-separated)
+     * @return transformed json in the string form
+     * @throws JsonProcessingException if the file provided is not a valid json
+     */
     @RequestMapping(value="/transform/{text}", method = RequestMethod.POST, produces = "application/json")
-    public String post( @PathVariable String text,
-                        @RequestBody ObjectNode json,
+    public String post( @RequestBody ObjectNode json,
                         @RequestParam(value = "actions", defaultValue = "") String actions,
-                        @RequestParam(value = "keys", defaultValue = "") String keys) throws JsonProcessingException {
+                        @RequestParam(value = "keys", defaultValue = "") String keys){
 
         // log the parameters
         logger.debug(String.valueOf(json));
@@ -43,7 +40,31 @@ public class JSONToolController {
 
         // perform the transformation
         JsonTransormationsWrapper wrapper = new JsonTransormationsWrapper(actions.split(","), keys.split(","));
-        BaseJsonTransformer transformer = wrapper.getTransformer(json);
-        return transformer.transform();
+        try{
+            BaseJsonTransformer transformer = wrapper.getTransformer(json);
+            return transformer.transform();
+        }
+        catch(IllegalArgumentException | JsonProcessingException e){
+            return e.getMessage();
+        }
+    }
+
+    /**
+     * Compares two json files and shows lines where there is a difference.
+     * @param jsons list of json files to be compared
+     * @return list of numbers of lines where there is a difference between json files
+     * @throws JsonProcessingException if the files provided are not valid jsons
+     */
+    @RequestMapping(value="/compare", method = RequestMethod.POST, produces = "application/json")
+    public List<Integer> post(@RequestBody ObjectNode[] jsons) throws JsonProcessingException {
+
+        // log the parameters
+        logger.debug(String.valueOf(jsons[0]));
+        logger.debug(String.valueOf(jsons[1]));
+
+        // perform the transformation
+        TextComparator comparator = new TextComparator((new JsonUnminifier(jsons[0])).transform(),
+                (new JsonUnminifier(jsons[1])).transform());
+        return comparator.differentLines();
     }
 }
