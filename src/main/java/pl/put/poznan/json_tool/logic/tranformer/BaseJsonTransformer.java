@@ -32,6 +32,7 @@ public abstract class BaseJsonTransformer {
     /**
      * Performs transformation and returns a json in String form.
      * @return transformed json in String form
+     * @throws JsonProcessingException exception on transform
      */
     public abstract String transform() throws JsonProcessingException;
 }

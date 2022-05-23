@@ -26,7 +26,6 @@ public class JSONToolController {
      * @param actions actions to be performed (in a string form, comma-separated)
      * @param keys keys to be removed or retained (in a string form, comma-separated)
      * @return transformed json in the string form
-     * @throws JsonProcessingException if the file provided is not a valid json
      */
     @RequestMapping(value="/transform/{text}", method = RequestMethod.POST, produces = "application/json")
     public String post( @RequestBody ObjectNode json,
