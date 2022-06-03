@@ -46,4 +46,25 @@ class JsonKeyRetainerTest {
         String res = jsonKeyRetainer.transform();
         assertEquals(expectedNode, objectMapper.readTree(res));
     }
+
+    @Test
+    void testNullKey() throws JsonProcessingException{
+        this.jsonKeyRetainer = new JsonKeyRetainer(new JsonMinifier(new JsonUnminifier(json)), new String[]{null});
+        String res = jsonKeyRetainer.transform();
+        assertEquals("{}", String.valueOf(objectMapper.readTree(res)));
+    }
+
+    @Test
+    void testWrongKey() throws JsonProcessingException{
+        this.jsonKeyRetainer = new JsonKeyRetainer(new JsonMinifier(new JsonUnminifier(json)), new String[]{"aaa"});
+        String res = jsonKeyRetainer.transform();
+        assertEquals("{}", String.valueOf(objectMapper.readTree(res)));
+    }
+
+    @Test
+    void testPartialWrongKey() throws JsonProcessingException{
+        this.jsonKeyRetainer = new JsonKeyRetainer(new JsonMinifier(new JsonUnminifier(json)), new String[]{"aaa", "id", "name"});
+        String res = jsonKeyRetainer.transform();
+        assertEquals(expectedNode, objectMapper.readTree(res));
+    }
 }
