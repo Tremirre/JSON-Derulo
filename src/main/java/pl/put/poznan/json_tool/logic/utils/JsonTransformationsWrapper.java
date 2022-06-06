@@ -5,7 +5,7 @@ import pl.put.poznan.json_tool.logic.tranformer.*;
 /**
  * Create a json decorator based on a list of parameters.
  */
-public class JsonTransormationsWrapper {
+public class JsonTransformationsWrapper {
 
     private String[] actions;
     private String[] keys;
@@ -15,7 +15,7 @@ public class JsonTransormationsWrapper {
      * @param actions actions to be performed (in a string form, comma-separated)
      * @param keys keys to be removed or retained (in a string form, comma-separated)
      */
-    public JsonTransormationsWrapper(String[] actions, String[] keys) {
+    public JsonTransformationsWrapper(String[] actions, String[] keys) {
         this.actions = actions;
         this.keys = keys;
     }

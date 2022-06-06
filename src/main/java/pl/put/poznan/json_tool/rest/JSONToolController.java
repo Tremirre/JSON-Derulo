@@ -8,7 +8,7 @@ import pl.put.poznan.json_tool.logic.textparsing.TextComparator;
 import pl.put.poznan.json_tool.logic.textparsing.TextFinder;
 import pl.put.poznan.json_tool.logic.tranformer.BaseJsonTransformer;
 import pl.put.poznan.json_tool.logic.tranformer.JsonUnminifier;
-import pl.put.poznan.json_tool.logic.utils.JsonTransormationsWrapper;
+import pl.put.poznan.json_tool.logic.utils.JsonTransformationsWrapper;
 
 import java.util.List;
 
@@ -39,7 +39,7 @@ public class JSONToolController {
         logger.debug(String.valueOf(keys));
 
         // perform the transformation
-        JsonTransormationsWrapper wrapper = new JsonTransormationsWrapper(actions.split(","), keys.split(","));
+        JsonTransformationsWrapper wrapper = new JsonTransformationsWrapper(actions.split(","), keys.split(","));
         try{
             BaseJsonTransformer transformer = wrapper.getTransformer(json);
             return transformer.transform();
