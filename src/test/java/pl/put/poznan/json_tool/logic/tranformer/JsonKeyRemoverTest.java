@@ -7,6 +7,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.Mockito.*;
 
 class JsonKeyRemoverTest {
     private ObjectNode json;
@@ -42,7 +43,7 @@ class JsonKeyRemoverTest {
         this.expectedNestedNode = (ObjectNode)this.objectMapper.readTree(expectedNestedJson);
         this.json = (ObjectNode)this.objectMapper.readTree(simpleJson);
         this.nestedJson = (ObjectNode)this.objectMapper.readTree(nestedJsons);
-        this.jsonKeyRemover = new JsonKeyRemover(json, keys);
+        this.jsonKeyRemover = new JsonKeyRemover(this.objectMapper, json, keys);
     }
 
     @Test
@@ -59,36 +60,45 @@ class JsonKeyRemoverTest {
 
     @Test
     void testTransformWithPrevious() throws JsonProcessingException {
-        this.jsonKeyRemover = new JsonKeyRemover(new JsonMinifier(new JsonUnminifier(json)), keys);
+        this.jsonKeyRemover = new JsonKeyRemover(new JsonMinifier(new JsonUnminifier(this.objectMapper, json)), keys);
         String res = jsonKeyRemover.transform();
         assertEquals(expectedNode, objectMapper.readTree(res));
     }
 
     @Test
     void testNestedRemover() throws JsonProcessingException {
-        this.jsonKeyRemover = new JsonKeyRemover(nestedJson, new String[]{"category"});
+        this.jsonKeyRemover = new JsonKeyRemover(this.objectMapper, nestedJson, new String[]{"category"});
         String res = jsonKeyRemover.transform();
         assertEquals(expectedNestedNode, objectMapper.readTree(res));
     }
 
     @Test
     void testNestedTransformWithPrevious() throws JsonProcessingException {
-        this.jsonKeyRemover = new JsonKeyRemover(new JsonMinifier(new JsonUnminifier(nestedJson)), new String[]{"category"});
+        this.jsonKeyRemover = new JsonKeyRemover(new JsonMinifier(new JsonUnminifier(this.objectMapper, nestedJson)), new String[]{"category"});
         String res = jsonKeyRemover.transform();
         assertEquals(expectedNestedNode, objectMapper.readTree(res));
     }
 
     @Test
     void testNullKey() throws JsonProcessingException{
-        this.jsonKeyRemover = new JsonKeyRemover(new JsonMinifier(new JsonUnminifier(json)), new String[]{null});
+        this.jsonKeyRemover = new JsonKeyRemover(new JsonMinifier(new JsonUnminifier(this.objectMapper, json)), new String[]{null});
         String res = jsonKeyRemover.transform();
         assertEquals(objectMapper.readTree(this.simpleJson), objectMapper.readTree(res));
     }
 
     @Test
     void testPartialWrongKey() throws JsonProcessingException {
-        this.jsonKeyRemover = new JsonKeyRemover(new JsonMinifier(new JsonUnminifier(json)), new String[]{"type", "ppu", "aa", "b"});
+        this.jsonKeyRemover = new JsonKeyRemover(new JsonMinifier(new JsonUnminifier(this.objectMapper, json)), new String[]{"type", "ppu", "aa", "b"});
         String res = jsonKeyRemover.transform();
         assertEquals(expectedNode, objectMapper.readTree(res));
+    }
+
+    @Test
+    void testObjectConstruct() throws JsonProcessingException {
+        var mockMapper = mock(ObjectMapper.class);
+        var transformer = new JsonKeyRemover(mockMapper, json, keys);
+        String res = transformer.transform();
+        verify(mockMapper, times(0)).writeValueAsString(null);
+        verifyNoMoreInteractions(mockMapper);
     }
 }

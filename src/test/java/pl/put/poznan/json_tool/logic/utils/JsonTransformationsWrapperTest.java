@@ -4,6 +4,7 @@ import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -21,10 +22,14 @@ public class JsonTransformationsWrapperTest {
     @Test
     void testAddAction() throws JsonProcessingException {
         var mockTransformer = mock(BaseJsonTransformer.class);
-        when(mockTransformer.rawTransform()).thenReturn(null);
+        var mapper = new ObjectMapper();
+        var node = (ObjectNode)mapper.readTree("{\"test\":\"nope\"}");
+        when(mockTransformer.rawTransform()).thenReturn(node);
+        when(mockTransformer.getMapper()).thenReturn(mapper);
         var nextTransformer = wrapper.addAction(mockTransformer, "minify");
         nextTransformer.transform();
         verify(mockTransformer, times(1)).rawTransform();
+        verify(mockTransformer, times(1)).getMapper();
     }
 
     @Test

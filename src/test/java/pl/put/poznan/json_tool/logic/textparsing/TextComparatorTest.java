@@ -31,8 +31,8 @@ class TextComparatorTest {
         ObjectNode json1  = (ObjectNode)mapper.readTree(simpleJson);
         ObjectNode json2  = (ObjectNode)mapper.readTree(simpleJson2);
 
-        TextComparator comparator = new TextComparator((new JsonUnminifier(json1)).transform(),
-                (new JsonUnminifier(json2)).transform());
+        TextComparator comparator = new TextComparator((new JsonUnminifier(mapper, json1)).transform(),
+                (new JsonUnminifier(mapper, json2)).transform());
         assertEquals(comparator.differentLines(), Arrays.asList(5, 6, 7, 8));
     }
 }

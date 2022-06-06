@@ -1,5 +1,6 @@
 package pl.put.poznan.json_tool.rest;
 import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -63,8 +64,9 @@ public class JSONToolController {
         logger.debug(String.valueOf(jsons[1]));
 
         // perform the transformation
-        TextComparator comparator = new TextComparator((new JsonUnminifier(jsons[0])).transform(),
-                (new JsonUnminifier(jsons[1])).transform());
+        var mapper = new ObjectMapper();
+        TextComparator comparator = new TextComparator((new JsonUnminifier(mapper, jsons[0])).transform(),
+                (new JsonUnminifier(mapper, jsons[1])).transform());
         return comparator.differentLines();
     }
 

@@ -1,4 +1,5 @@
 package pl.put.poznan.json_tool.logic.utils;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import pl.put.poznan.json_tool.logic.tranformer.*;
 
@@ -42,8 +43,7 @@ public class JsonTransformationsWrapper {
      * @return json decorator
      */
     public BaseJsonTransformer getTransformer(ObjectNode json) throws IllegalArgumentException {
-
-        BaseJsonTransformer transformer = new JsonUnminifier(json);
+        BaseJsonTransformer transformer = new JsonUnminifier(new ObjectMapper(), json);
         for(String action: this.actions){
             transformer = addAction(transformer, action);
         }

@@ -13,11 +13,11 @@ public abstract class BaseJsonTransformer {
     protected ObjectNode jsonObjectNode;
 
     public BaseJsonTransformer(BaseJsonTransformer previousTransformer) {
-        this.jsonObjectMapper = new ObjectMapper();
+        this.jsonObjectMapper = previousTransformer.getMapper();
         this.previousTransformer = previousTransformer;
     }
-    public BaseJsonTransformer(ObjectNode json){
-        this.jsonObjectMapper = new ObjectMapper();
+    public BaseJsonTransformer(ObjectMapper mapper, ObjectNode json){
+        this.jsonObjectMapper = mapper;
         this.jsonObjectNode = json;
     }
 
@@ -35,4 +35,8 @@ public abstract class BaseJsonTransformer {
      * @throws JsonProcessingException exception on transform
      */
     public abstract String transform() throws JsonProcessingException;
+
+    public ObjectMapper getMapper() {
+        return this.jsonObjectMapper;
+    }
 }

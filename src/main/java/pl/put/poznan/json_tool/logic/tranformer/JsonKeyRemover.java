@@ -1,6 +1,7 @@
 package pl.put.poznan.json_tool.logic.tranformer;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 
 import java.util.Arrays;
@@ -15,8 +16,8 @@ public class JsonKeyRemover extends BaseJsonTransformer{
         super(nextTransform);
         this.keys = keys;
     }
-    public JsonKeyRemover(ObjectNode json, String[] keys){
-        super(json);
+    public JsonKeyRemover(ObjectMapper mapper, ObjectNode json, String[] keys){
+        super(mapper, json);
         this.keys= keys;
     }
 

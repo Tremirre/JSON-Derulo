@@ -7,6 +7,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.Mockito.*;
 
 class JsonKeyRetainerTest {
     private ObjectNode json;
@@ -25,7 +26,7 @@ class JsonKeyRetainerTest {
         this.objectMapper = new ObjectMapper();
         this.expectedNode = (ObjectNode)this.objectMapper.readTree(expectedJson);
         this.json = (ObjectNode)this.objectMapper.readTree(simpleJson);
-        this.jsonKeyRetainer = new JsonKeyRetainer(json, keys);
+        this.jsonKeyRetainer = new JsonKeyRetainer(this.objectMapper, json, keys);
     }
 
     @Test
@@ -42,29 +43,38 @@ class JsonKeyRetainerTest {
 
     @Test
     void testTransformWithPrevious() throws JsonProcessingException {
-        this.jsonKeyRetainer = new JsonKeyRetainer(new JsonMinifier(new JsonUnminifier(json)), keys);
+        this.jsonKeyRetainer = new JsonKeyRetainer(new JsonMinifier(new JsonUnminifier(this.objectMapper, json)), keys);
         String res = jsonKeyRetainer.transform();
         assertEquals(expectedNode, objectMapper.readTree(res));
     }
 
     @Test
     void testNullKey() throws JsonProcessingException{
-        this.jsonKeyRetainer = new JsonKeyRetainer(new JsonMinifier(new JsonUnminifier(json)), new String[]{null});
+        this.jsonKeyRetainer = new JsonKeyRetainer(new JsonMinifier(new JsonUnminifier(this.objectMapper, json)), new String[]{null});
         String res = jsonKeyRetainer.transform();
         assertEquals("{}", String.valueOf(objectMapper.readTree(res)));
     }
 
     @Test
     void testWrongKey() throws JsonProcessingException{
-        this.jsonKeyRetainer = new JsonKeyRetainer(new JsonMinifier(new JsonUnminifier(json)), new String[]{"aaa"});
+        this.jsonKeyRetainer = new JsonKeyRetainer(new JsonMinifier(new JsonUnminifier(this.objectMapper, json)), new String[]{"aaa"});
         String res = jsonKeyRetainer.transform();
         assertEquals("{}", String.valueOf(objectMapper.readTree(res)));
     }
 
     @Test
     void testPartialWrongKey() throws JsonProcessingException{
-        this.jsonKeyRetainer = new JsonKeyRetainer(new JsonMinifier(new JsonUnminifier(json)), new String[]{"aaa", "id", "name"});
+        this.jsonKeyRetainer = new JsonKeyRetainer(new JsonMinifier(new JsonUnminifier(this.objectMapper, json)), new String[]{"aaa", "id", "name"});
         String res = jsonKeyRetainer.transform();
         assertEquals(expectedNode, objectMapper.readTree(res));
+    }
+
+    @Test
+    void testObjectConstruct() throws JsonProcessingException {
+        var mockMapper = mock(ObjectMapper.class);
+        var transformer = new JsonKeyRetainer(mockMapper, json, keys);
+        String res = transformer.transform();
+        verify(mockMapper, times(0)).writeValueAsString(null);
+        verifyNoMoreInteractions(mockMapper);
     }
 }

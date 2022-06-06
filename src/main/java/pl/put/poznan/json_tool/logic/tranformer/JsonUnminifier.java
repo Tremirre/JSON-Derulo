@@ -1,6 +1,7 @@
 package pl.put.poznan.json_tool.logic.tranformer;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 
 /**
@@ -10,8 +11,8 @@ public class JsonUnminifier extends BaseJsonTransformer {
     public JsonUnminifier(BaseJsonTransformer nextTransform) {
         super(nextTransform);
     }
-    public JsonUnminifier(ObjectNode json){
-        super(json);
+    public JsonUnminifier(ObjectMapper mapper, ObjectNode json){
+        super(mapper, json);
     }
 
     /**

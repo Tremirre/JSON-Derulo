@@ -7,6 +7,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.Mockito.*;
 
 class JsonMinifierTest {
     private ObjectMapper objectMapper = new ObjectMapper();
@@ -25,13 +26,22 @@ class JsonMinifierTest {
 
     @Test
     void testTransform() throws JsonProcessingException {
-        String res = new JsonMinifier(jsonNode).transform();
+        String res = new JsonMinifier(this.objectMapper, jsonNode).transform();
         assertEquals(expectedJson, res);
     }
 
     @Test
     void testTransformWithPrevious() throws JsonProcessingException{
-        String res = new JsonMinifier(new JsonKeyRemover(this.jsonNode, new String[]{"-"})).transform();
+        String res = new JsonMinifier(new JsonKeyRemover(this.objectMapper, this.jsonNode, new String[]{"-"})).transform();
         assertEquals(expectedJson, res);
+    }
+
+    @Test
+    void testObjectConstruct() throws JsonProcessingException {
+        var mockMapper = mock(ObjectMapper.class);
+        var transformer = new JsonMinifier(mockMapper, jsonNode);
+        String res = transformer.transform();
+        verify(mockMapper, times(1)).writeValueAsString(argThat(obj -> true));
+        verifyNoMoreInteractions(mockMapper);
     }
 }
