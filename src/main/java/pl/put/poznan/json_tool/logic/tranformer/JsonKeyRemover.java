@@ -25,7 +25,7 @@ public class JsonKeyRemover extends BaseJsonTransformer{
      * @return json object node without provided keys
      */
     @Override
-    protected ObjectNode rawTransform() {
+    public ObjectNode rawTransform() {
         return super.rawTransform().remove(Arrays.asList(keys));
     }
 

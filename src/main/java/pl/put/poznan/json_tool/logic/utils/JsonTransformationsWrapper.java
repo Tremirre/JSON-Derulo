@@ -11,7 +11,7 @@ public class JsonTransformationsWrapper {
     private String[] keys;
 
     /**
-     * Creates an instance of JsonTransormationsWrapper.
+     * Creates an instance of JsonTransformationsWrapper.
      * @param actions actions to be performed (in a string form, comma-separated)
      * @param keys keys to be removed or retained (in a string form, comma-separated)
      */

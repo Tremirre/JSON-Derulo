@@ -25,7 +25,7 @@ public class JsonKeyRetainer extends BaseJsonTransformer{
      * @return json object node with provided keys only
      */
     @Override
-    protected ObjectNode rawTransform() {
+    public ObjectNode rawTransform() {
         return super.rawTransform().retain(Arrays.asList(keys));
     }
 

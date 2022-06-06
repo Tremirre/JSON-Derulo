@@ -25,7 +25,7 @@ public abstract class BaseJsonTransformer {
      * Performs transformation and returns a json in ObjectNode form.
      * @return transformed json in ObjectNode form
      */
-    protected ObjectNode rawTransform() {
+    public ObjectNode rawTransform() {
         return this.previousTransformer != null ? this.previousTransformer.rawTransform() : this.jsonObjectNode;
     }
 
