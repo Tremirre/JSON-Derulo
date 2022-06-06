@@ -1,4 +1,4 @@
-package pl.put.poznan.json_tool.logic;
+package pl.put.poznan.json_tool.logic.textparsing;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import pl.put.poznan.json_tool.logic.tranformer.JsonUnminifier;

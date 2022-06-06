@@ -4,7 +4,8 @@ import com.fasterxml.jackson.databind.node.ObjectNode;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.web.bind.annotation.*;
-import pl.put.poznan.json_tool.logic.TextComparator;
+import pl.put.poznan.json_tool.logic.textparsing.TextComparator;
+import pl.put.poznan.json_tool.logic.textparsing.TextFinder;
 import pl.put.poznan.json_tool.logic.tranformer.BaseJsonTransformer;
 import pl.put.poznan.json_tool.logic.tranformer.JsonUnminifier;
 import pl.put.poznan.json_tool.logic.utils.JsonTransormationsWrapper;
@@ -65,5 +66,26 @@ public class JSONToolController {
         TextComparator comparator = new TextComparator((new JsonUnminifier(jsons[0])).transform(),
                 (new JsonUnminifier(jsons[1])).transform());
         return comparator.differentLines();
+    }
+
+    /**
+     * TODO
+     * @param text
+     * @param string
+     * @return
+     * @throws JsonProcessingException
+     */
+    @RequestMapping(value="/find", method = RequestMethod.POST, produces = "application/json")
+    public List<Integer> post(@RequestBody String text,
+                              @RequestParam(value = "string", defaultValue = "") String string)
+            throws JsonProcessingException {
+
+        // log the parameters
+        logger.debug(text);
+        logger.debug(string);
+
+        // perform the transformation
+        TextFinder finder = new TextFinder(text, string);
+        return finder.findLines();
     }
 }
