@@ -69,16 +69,14 @@ public class JSONToolController {
     }
 
     /**
-     * TODO
-     * @param text
-     * @param string
-     * @return
-     * @throws JsonProcessingException
+     * Finds lines that contain a pre-defined string in the text.
+     * @param text text to be searched
+     * @param string string to be looked up in the text
+     * @return list of numbers of lines that contain a specified string.
      */
     @RequestMapping(value="/find", method = RequestMethod.POST, produces = "application/json")
     public List<Integer> post(@RequestBody String text,
-                              @RequestParam(value = "string", defaultValue = "") String string)
-            throws JsonProcessingException {
+                              @RequestParam(value = "string", defaultValue = "") String string) {
 
         // log the parameters
         logger.debug(text);
