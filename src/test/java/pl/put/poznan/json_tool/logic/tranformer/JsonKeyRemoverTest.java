@@ -92,13 +92,4 @@ class JsonKeyRemoverTest {
         String res = jsonKeyRemover.transform();
         assertEquals(expectedNode, objectMapper.readTree(res));
     }
-
-    @Test
-    void testObjectConstruct() throws JsonProcessingException {
-        var mockMapper = mock(ObjectMapper.class);
-        var transformer = new JsonKeyRemover(mockMapper, json, keys);
-        String res = transformer.transform();
-        verify(mockMapper, times(0)).writeValueAsString(null);
-        verifyNoMoreInteractions(mockMapper);
-    }
 }
