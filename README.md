@@ -4,7 +4,6 @@
 # JSON-Derulo
 2022 SE Java project<br>
 [Backlog spreadsheet](https://github.com/Tremirre/JSON-Derulo/files/8747403/JSON.tools.xlsx)<br>
-[Javadoc documentation]()
 
 ## About JSON-Derulo
 Application for programmers who need to reformat or filter data structures saved in JSON format and to compare the structures with each other or find lines that contain a pre-defined string in the text. JSON tools application allows you to both minify the unminified JSON representation, as well as the reverse operation (with any blanks and new lines added). The application will be available via remote API, so it can be integrated with existing tools. 
