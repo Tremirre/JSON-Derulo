@@ -1,0 +1,5 @@
+pl.put.poznan.json_tool.app
+pl.put.poznan.json_tool.logic.textparsing
+pl.put.poznan.json_tool.logic.tranformer
+pl.put.poznan.json_tool.logic.utils
+pl.put.poznan.json_tool.rest
